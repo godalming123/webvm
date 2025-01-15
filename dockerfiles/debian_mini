@@ -13,4 +13,5 @@ WORKDIR /home/user/
 # TODO: Use fish instead of bash
 ENV HOME="/home/user" TERM="xterm" USER="user" SHELL="/bin/bash" EDITOR="helix" LANG="en_US.UTF-8" LC_ALL="C"
 RUN echo 'root:password' | chpasswd
-CMD [ "/bin/fish" ]
+# TODO: Use fish instead of bash
+CMD [ "/bin/bash" ]
