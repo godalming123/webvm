@@ -1,17 +1,13 @@
-FROM --platform=i386 i386/debian:bookworm
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get clean && apt-get update && apt-get -y upgrade
-RUN apt-get -y install apt-utils nix-bin nix-setup-systemd gcc git unzip fakeroot dbus base whiptail hexedit patch wamerican ucf manpages file dialog curl less netcat-openbsd
-RUN useradd -m user && echo "user:password" | chpasswd
+FROM opensuse/tumbleweed
+#RUN zypper --non-interactive addrepo https://download.opensuse.org/repositories/openSUSE:Factory/standard/openSUSE:Factory.repo
+RUN zypper --non-interactive dup
+# TODO: Add go and gopls
+RUN zypper --non-interactive install git
+#RUN zypper --non-interactive install nushell helix git
 RUN git clone https://github.com/godalming123/common-assembly.git /home/user/common-assembly/
-RUN chown -R user:user /home/user/common-assembly/
-# RUN nix-env -iA nixpkgs.helix nixpkgs.go nixpkgs.nushell
-#RUN go install golang.org/x/tools/gopls@latest # TODO: Add gopls
+#RUN chown -R user:user /home/user/common-assembly/
 # We set WORKDIR, as this gets extracted by Webvm to be used as the cwd. This is optional.
 WORKDIR /home/user/
-# We set env, as this gets extracted by Webvm. This is optional.
-# TODO: Use fish instead of bash
+# TODO: Use nushell instead of bash
 ENV HOME="/home/user" TERM="xterm" USER="user" SHELL="/bin/bash" EDITOR="helix" LANG="en_US.UTF-8" LC_ALL="C"
-RUN echo 'root:password' | chpasswd
-# TODO: Use fish instead of bash
 CMD [ "/bin/bash" ]
