@@ -1,9 +1,8 @@
 FROM --platform=i386 i386/debian:buster
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get clean && apt-get update && apt-get -y upgrade
-RUN apt-get -y install apt-utils gcc git unzip fakeroot dbus base whiptail hexedit patch wamerican ucf manpages file dialog curl less netcat-openbsd
+RUN apt-get -y install apt-utils nix-bin gcc git unzip fakeroot dbus base whiptail hexedit patch wamerican ucf manpages file dialog curl less netcat-openbsd
 RUN useradd -m user && echo "user:password" | chpasswd
-RUN sh <(curl -L https://nixos.org/nix/install) --daemon
 RUN git clone https://github.com/godalming123/common-assembly.git /home/user/common-assembly/
 RUN chown -R user:user /home/user/common-assembly/
 RUN nix-env install -iA nixpkgs.helix nixpkgs.go nixpkgs.nushell
