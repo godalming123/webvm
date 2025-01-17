@@ -1,12 +1,13 @@
 FROM --platform=i386 i386/debian:buster
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get clean && apt-get update && apt-get -y upgrade
-RUN apt-get -y install apt-utils golang gcc fish git unzip nodejs fakeroot dbus base whiptail hexedit patch wamerican ucf manpages file dialog curl less netcat-openbsd
+RUN apt-get -y install apt-utils bash gcc git unzip nodejs fakeroot dbus base whiptail hexedit patch wamerican ucf manpages file dialog curl less netcat-openbsd
+RUN NONINTERACTIVE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 RUN git clone https://github.com/godalming123/common-assembly.git /home/user/common-assembly/
+RUN chown -R root:root /home/user/common-assembly/
+RUN brew install helix go nushell
 #RUN go install golang.org/x/tools/gopls@latest # TODO: Add gopls
 RUN useradd -m user && echo "user:password" | chpasswd
-COPY --chown=root:root ./helix-25.01-x86_64.AppImage /usr/bin/helix
-RUN chmod +x /usr/bin/helix
 # We set WORKDIR, as this gets extracted by Webvm to be used as the cwd. This is optional.
 WORKDIR /home/user/
 # We set env, as this gets extracted by Webvm. This is optional.
