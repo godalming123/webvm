@@ -1,13 +1,13 @@
 FROM --platform=i386 i386/debian:buster
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get clean && apt-get update && apt-get -y upgrade
-RUN apt-get -y install apt-utils bash gcc git unzip nodejs fakeroot dbus base whiptail hexedit patch wamerican ucf manpages file dialog curl less netcat-openbsd
-RUN NONINTERACTIVE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-RUN git clone https://github.com/godalming123/common-assembly.git /home/user/common-assembly/
-RUN chown -R root:root /home/user/common-assembly/
-RUN brew install helix go nushell
-#RUN go install golang.org/x/tools/gopls@latest # TODO: Add gopls
+RUN apt-get -y install apt-utils gcc git unzip fakeroot dbus base whiptail hexedit patch wamerican ucf manpages file dialog curl less netcat-openbsd
 RUN useradd -m user && echo "user:password" | chpasswd
+RUN sh <(curl -L https://nixos.org/nix/install) --daemon
+RUN git clone https://github.com/godalming123/common-assembly.git /home/user/common-assembly/
+RUN chown -R user:user /home/user/common-assembly/
+RUN nix-env install -iA nixpkgs.helix nixpkgs.go nixpkgs.nushell
+#RUN go install golang.org/x/tools/gopls@latest # TODO: Add gopls
 # We set WORKDIR, as this gets extracted by Webvm to be used as the cwd. This is optional.
 WORKDIR /home/user/
 # We set env, as this gets extracted by Webvm. This is optional.
