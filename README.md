@@ -6,14 +6,18 @@ A fork of [WebVM](https://github.com/leaningtech/webvm) that is designed to be a
 
 - Use alpine linux instead of debian since it has better packages in the repos
 - Remove some packages that I wouildn't use like nodejs and ruby
-- Install some packages that I would use like helix, nushell, and lf
+- Install some packages that I would use like helix, go, nushell, and lf
+- Install the go language server (gopls)
 - Clone the [common-assembly](https://github.com/godalming123/common-assembly) codebase into the home directory
 - Update the default shell to nushell, and the default editor to helix
+- Add doas, sudo, and `USER root` to try and be able to access root
 
 # TODO
 
-- Fix go, gopls lf not working
-- Fix helix not having proper colours
+- Fix go, gopls, and lf not working
+- Fix either doas, sudo, or `USER root` to be able to access root
+- Fix nu shell not working
+- Fix helix not having proper colors
 
 # Thanks to...
 
