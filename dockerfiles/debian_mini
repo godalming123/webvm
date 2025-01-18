@@ -10,6 +10,8 @@ RUN go install golang.org/x/tools/gopls@latest
 # Setup user accounts
 RUN echo 'permit :wheel' > /etc/doas.d/doas.conf
 RUN echo "user ALL=(ALL) ALL" >> /etc/sudoers
+# By default, su runs with the permisions of the process that invoked it, this makes su run with the permisions of its owner (root) so that it doesn't give the error "su: must be suid to work properly"
+RUN chmod +s /bin/su
 RUN echo "root:password" | chpasswd
 RUN adduser user -D
 RUN addgroup user wheel
