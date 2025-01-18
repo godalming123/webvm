@@ -10,6 +10,11 @@ A fork of [WebVM](https://github.com/leaningtech/webvm) that is designed to be a
 - Clone the [common-assembly](https://github.com/godalming123/common-assembly) codebase into the home directory
 - Update the default shell to nushell, and the default editor to helix
 
+# TODO
+
+- Fix go, gopls lf not working
+- Fix helix not having proper colours
+
 # Thanks to...
 
 This project depends on:
