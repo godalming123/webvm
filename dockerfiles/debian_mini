@@ -1,13 +1,10 @@
-FROM opensuse/tumbleweed
-#RUN zypper --non-interactive addrepo https://download.opensuse.org/repositories/openSUSE:Factory/standard/openSUSE:Factory.repo
-RUN zypper --non-interactive dup
-# TODO: Add go and gopls
-RUN zypper --non-interactive install git
-#RUN zypper --non-interactive install nushell helix git
+FROM --platform=i386 i386/alpine
+RUN apk update; apk upgrade --available
+RUN apk add helix nushell git go lf
+RUN go install golang.org/x/tools/gopls@latest
 RUN git clone https://github.com/godalming123/common-assembly.git /home/user/common-assembly/
 #RUN chown -R user:user /home/user/common-assembly/
 # We set WORKDIR, as this gets extracted by Webvm to be used as the cwd. This is optional.
-WORKDIR /home/user/
-# TODO: Use nushell instead of bash
-ENV HOME="/home/user" TERM="xterm" USER="user" SHELL="/bin/bash" EDITOR="helix" LANG="en_US.UTF-8" LC_ALL="C"
-CMD [ "/bin/bash" ]
+WORKDIR /home/
+ENV HOME="/home/" TERM="xterm" USER="user" SHELL="/bin/bash" EDITOR="helix" LANG="en_US.UTF-8" LC_ALL="C"
+CMD [ "/bin/nu" ]
