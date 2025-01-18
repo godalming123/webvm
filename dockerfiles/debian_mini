@@ -4,12 +4,13 @@ FROM --platform=i386 i386/alpine
 RUN apk update; apk upgrade --available
 
 # Install packages
-RUN apk add helix nushell git go lf
+RUN apk add helix nushell git go lf sudo
 RUN go install golang.org/x/tools/gopls@latest
 
 # Setup user accounts
 RUN echo "root:password" | chpasswd
 RUN adduser user -D && echo "user:password" | chpasswd
+RUN echo "user ALL=(ALL) ALL" >> /etc/sudoers
 
 # Add common assembly codebase
 RUN git clone https://github.com/godalming123/common-assembly.git /home/common-assembly/
@@ -18,6 +19,5 @@ RUN chown -R user:user /home/common-assembly/
 # Set environment variables
 # We set WORKDIR, as this gets extracted by Webvm to be used as the cwd. This is optional.
 WORKDIR /home
-USER 0:0
-ENV HOME="/home" UID=0 GID=0 USER="root" SHELL="/bin/sh" EDITOR="hx" LANG="en_US.UTF-8" LC_ALL="C"
+ENV HOME="/home" USER="user" SHELL="/bin/sh" EDITOR="hx" LANG="en_US.UTF-8" LC_ALL="C"
 CMD [ "/bin/sh" ]
