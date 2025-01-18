@@ -18,5 +18,5 @@ RUN chown -R user:user /home/common-assembly/
 # Set environment variables
 # We set WORKDIR, as this gets extracted by Webvm to be used as the cwd. This is optional.
 WORKDIR /home
-ENV HOME="/home" USER="root" SHELL="/bin/sh" EDITOR="hx" LANG="en_US.UTF-8" LC_ALL="C"
+ENV HOME="/home" UID=0 GID=0 USER="root" SHELL="/bin/sh" EDITOR="hx" LANG="en_US.UTF-8" LC_ALL="C"
 CMD [ "/bin/sh" ]
