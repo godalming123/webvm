@@ -4,11 +4,12 @@ FROM --platform=i386 i386/alpine
 RUN apk update; apk upgrade --available
 
 # Install packages
-RUN apk add helix nushell git go lf doas
+RUN apk add helix nushell git go lf doas sudo
 RUN go install golang.org/x/tools/gopls@latest
 
 # Setup user accounts
 RUN echo 'permit :wheel' > /etc/doas.d/doas.conf
+RUN echo "user ALL=(ALL) ALL" >> /etc/sudoers
 RUN echo "root:password" | chpasswd
 RUN adduser user -D
 RUN addgroup user wheel
